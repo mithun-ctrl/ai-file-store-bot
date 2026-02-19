@@ -79,6 +79,7 @@ Note: For private channels, if invite link looks like `https://t.me/c/1234567890
 Detailed production steps are documented in:
 
 - `docs/VPS_DEPLOYMENT.md`
+- `docs/DOCKER_DEPLOYMENT.md`
 
 It covers:
 - Ubuntu server setup
@@ -86,3 +87,4 @@ It covers:
 - systemd service setup
 - logs, restart, and upgrade flow
 - security basics
+- Docker + Docker Compose deployment
