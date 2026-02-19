@@ -1,0 +1,165 @@
+# VPS Deployment Guide (Ubuntu + systemd)
+
+This guide explains how to deploy `ai-file-store-bot` on a VPS for 24/7 usage.
+
+## 1. Server prerequisites
+- Ubuntu 22.04 or 24.04
+- A non-root sudo user
+- Open internet access for Telegram + MongoDB endpoint
+
+Update server:
+
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y git curl ca-certificates
+```
+
+## 2. Install Node.js 20
+
+```bash
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
+node -v
+npm -v
+```
+
+## 3. MongoDB setup
+Choose one:
+
+- Option A (recommended): MongoDB Atlas (managed cloud DB).
+- Option B: local MongoDB server on VPS.
+
+If using Atlas, whitelist your VPS IP and copy connection URI.
+
+## 4. Clone project
+
+```bash
+cd /opt
+sudo git clone https://github.com/mithun-ctrl/ai-file-store-bot.git
+sudo chown -R $USER:$USER /opt/ai-file-store-bot
+cd /opt/ai-file-store-bot
+```
+
+Install dependencies:
+
+```bash
+npm ci
+```
+
+## 5. Configure environment
+
+```bash
+cp .env.example .env
+nano .env
+```
+
+Set:
+- `BOT_TOKEN`
+- `BOT_USERNAME` (without `@`)
+- `DB_URI`
+- `DB_CHANNEL_ID` (example: `-1001234567890`)
+
+## 6. Run once for verification
+
+```bash
+npm run start
+```
+
+If startup looks good (`[DB] Connected`, `[BOT] Telegraf bot started`), stop with `Ctrl + C`.
+
+## 7. Create systemd service
+
+Create service file:
+
+```bash
+sudo nano /etc/systemd/system/ai-file-store-bot.service
+```
+
+Paste:
+
+```ini
+[Unit]
+Description=AI File Store Telegram Bot
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/opt/ai-file-store-bot
+Environment=NODE_ENV=production
+EnvironmentFile=/opt/ai-file-store-bot/.env
+ExecStart=/usr/bin/node src/index.js
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Notes:
+- Replace `User` and `Group` with your VPS user if not `ubuntu`.
+- Confirm node path with `which node`. If different, update `ExecStart`.
+
+Enable and start:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable ai-file-store-bot
+sudo systemctl start ai-file-store-bot
+sudo systemctl status ai-file-store-bot
+```
+
+## 8. Logs and operations
+
+Live logs:
+
+```bash
+sudo journalctl -u ai-file-store-bot -f
+```
+
+Restart:
+
+```bash
+sudo systemctl restart ai-file-store-bot
+```
+
+Stop:
+
+```bash
+sudo systemctl stop ai-file-store-bot
+```
+
+## 9. Updating bot on VPS
+
+```bash
+cd /opt/ai-file-store-bot
+git pull origin main
+npm ci
+sudo systemctl restart ai-file-store-bot
+sudo journalctl -u ai-file-store-bot -n 50 --no-pager
+```
+
+## 10. Security checklist
+- Keep `.env` private and never commit it.
+- Use strong DB credentials.
+- Restrict MongoDB access by IP/network.
+- Keep OS packages updated (`apt update && apt upgrade`).
+- Use firewall rules (`ufw`) and allow only required ports.
+
+## 11. Troubleshooting
+
+Service fails to start:
+- Check `sudo systemctl status ai-file-store-bot`.
+- Check logs with `journalctl`.
+- Validate `.env` values.
+
+No files are being indexed:
+- Ensure bot is admin in source channel.
+- Ensure `DB_CHANNEL_ID` is correct.
+- Send test file in the same configured channel.
+
+Search returns no deep link:
+- Ensure `BOT_USERNAME` is set correctly.
