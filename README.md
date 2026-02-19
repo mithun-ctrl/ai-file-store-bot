@@ -1,12 +1,14 @@
-# ai-file-store-bot
+# file-link-store-bot
 
 Telegram file indexing bot for private channels.
+
+Official bot name: **File Link Store Bot**.
 
 This bot:
 - Stores files posted in a configured channel.
 - Generates deep links (`/start <linkId>`) to retrieve stored files.
 - Supports user search with pagination (10 result buttons per page).
-- Uses regex-based metadata extraction (no AI dependency).
+- Uses regex-based metadata extraction.
 
 ## How it works
 1. You post files in your source Telegram channel.
@@ -27,8 +29,8 @@ This bot:
 1. Clone and install:
 
 ```bash
-git clone https://github.com/mithun-ctrl/ai-file-store-bot.git
-cd ai-file-store-bot
+git clone https://github.com/mithun-ctrl/ai-file-store-bot.git file-link-store-bot
+cd file-link-store-bot
 npm install
 ```
 
@@ -84,4 +86,3 @@ It covers:
 - systemd service setup
 - logs, restart, and upgrade flow
 - security basics
-

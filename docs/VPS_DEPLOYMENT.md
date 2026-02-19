@@ -1,6 +1,6 @@
 # VPS Deployment Guide (Ubuntu + systemd)
 
-This guide explains how to deploy `ai-file-store-bot` on a VPS for 24/7 usage.
+This guide explains how to deploy `file-link-store-bot` on a VPS for 24/7 usage.
 
 ## 1. Server prerequisites
 - Ubuntu 22.04 or 24.04
@@ -35,9 +35,9 @@ If using Atlas, whitelist your VPS IP and copy connection URI.
 
 ```bash
 cd /opt
-sudo git clone https://github.com/mithun-ctrl/ai-file-store-bot.git
-sudo chown -R $USER:$USER /opt/ai-file-store-bot
-cd /opt/ai-file-store-bot
+sudo git clone https://github.com/mithun-ctrl/ai-file-store-bot.git /opt/file-link-store-bot
+sudo chown -R $USER:$USER /opt/file-link-store-bot
+cd /opt/file-link-store-bot
 ```
 
 Install dependencies:
@@ -72,23 +72,23 @@ If startup looks good (`[DB] Connected`, `[BOT] Telegraf bot started`), stop wit
 Create service file:
 
 ```bash
-sudo nano /etc/systemd/system/ai-file-store-bot.service
+sudo nano /etc/systemd/system/file-link-store-bot.service
 ```
 
 Paste:
 
 ```ini
 [Unit]
-Description=AI File Store Telegram Bot
+Description=File Link Store Telegram Bot
 After=network.target
 
 [Service]
 Type=simple
 User=ubuntu
 Group=ubuntu
-WorkingDirectory=/opt/ai-file-store-bot
+WorkingDirectory=/opt/file-link-store-bot
 Environment=NODE_ENV=production
-EnvironmentFile=/opt/ai-file-store-bot/.env
+EnvironmentFile=/opt/file-link-store-bot/.env
 ExecStart=/usr/bin/node src/index.js
 Restart=always
 RestartSec=5
@@ -107,9 +107,9 @@ Enable and start:
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable ai-file-store-bot
-sudo systemctl start ai-file-store-bot
-sudo systemctl status ai-file-store-bot
+sudo systemctl enable file-link-store-bot
+sudo systemctl start file-link-store-bot
+sudo systemctl status file-link-store-bot
 ```
 
 ## 8. Logs and operations
@@ -117,29 +117,29 @@ sudo systemctl status ai-file-store-bot
 Live logs:
 
 ```bash
-sudo journalctl -u ai-file-store-bot -f
+sudo journalctl -u file-link-store-bot -f
 ```
 
 Restart:
 
 ```bash
-sudo systemctl restart ai-file-store-bot
+sudo systemctl restart file-link-store-bot
 ```
 
 Stop:
 
 ```bash
-sudo systemctl stop ai-file-store-bot
+sudo systemctl stop file-link-store-bot
 ```
 
 ## 9. Updating bot on VPS
 
 ```bash
-cd /opt/ai-file-store-bot
+cd /opt/file-link-store-bot
 git pull origin main
 npm ci
-sudo systemctl restart ai-file-store-bot
-sudo journalctl -u ai-file-store-bot -n 50 --no-pager
+sudo systemctl restart file-link-store-bot
+sudo journalctl -u file-link-store-bot -n 50 --no-pager
 ```
 
 ## 10. Security checklist
@@ -152,7 +152,7 @@ sudo journalctl -u ai-file-store-bot -n 50 --no-pager
 ## 11. Troubleshooting
 
 Service fails to start:
-- Check `sudo systemctl status ai-file-store-bot`.
+- Check `sudo systemctl status file-link-store-bot`.
 - Check logs with `journalctl`.
 - Validate `.env` values.
 

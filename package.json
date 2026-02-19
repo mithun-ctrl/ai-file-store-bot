@@ -1,5 +1,5 @@
 {
-  "name": "ai-file-store-bot",
+  "name": "file-link-store-bot",
   "version": "1.0.0",
   "description": "Production-ready Telegram file indexer bot with Telegraf and MongoDB",
   "type": "module",
