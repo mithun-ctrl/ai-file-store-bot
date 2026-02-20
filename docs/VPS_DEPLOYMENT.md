@@ -142,8 +142,7 @@ curl -i http://127.0.0.1:8080/
 ```
 
 Expected:
-- `200` if bot is ready.
-- `503` if bot is down/not ready.
+- `200` with JSON `{ "status": "Bot Running" }`.
 
 For home monitoring, expose `HEALTH_PORT` in firewall only for your home public IP.
 

@@ -79,7 +79,8 @@ Note: For private channels, if invite link looks like `https://t.me/c/1234567890
 
 ## Health endpoint
 - Default health URL: `http://<server-ip>:<HEALTH_PORT>/`
-- Returns `200` when bot is ready, `503` when down/not ready.
+- Returns JSON: `{ "status": "Bot Running" }`
+- Only `/` is exposed for health checks.
 
 ## Home monitor
 Run a home monitoring server:

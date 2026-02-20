@@ -54,8 +54,7 @@ curl -i http://127.0.0.1:8080/
 ```
 
 Expected:
-- `200` when bot is ready.
-- `503` when bot is down/not ready.
+- `200` with JSON `{ "status": "Bot Running" }`.
 
 ## 5. Check logs and status
 

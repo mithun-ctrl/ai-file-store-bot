@@ -119,7 +119,7 @@ async function runCheck() {
 function startStatusServer() {
   const server = http.createServer((req, res) => {
     const path = new URL(req.url || "/", "http://localhost").pathname;
-    if (path !== "/" && path !== "/health") {
+    if (path !== "/") {
       res.writeHead(404, { "content-type": "application/json; charset=utf-8" });
       res.end(JSON.stringify({ error: "Not found" }));
       return;

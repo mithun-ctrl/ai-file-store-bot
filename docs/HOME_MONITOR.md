@@ -3,15 +3,11 @@
 Use this when you want a server at home to continuously check whether your bot is up.
 
 ## 1. Bot health endpoint
-The bot exposes these endpoints:
-- `/` (default readiness endpoint)
-- `/health` (same as `/`)
-- `/health/ready` (same readiness result)
-- `/health/live` (process alive check)
+The bot exposes only one endpoint:
+- `/`
 
-Ready endpoint returns:
-- `200` when bot + DB are ready.
-- `503` when bot is down/not ready.
+Response:
+- `200` with JSON `{ "status": "Bot Running" }`
 
 ## 2. Enable health endpoint on bot server
 In bot `.env`:
@@ -52,11 +48,6 @@ npm run monitor:home
 ## 4. Home monitor status endpoint
 The home monitor also starts a local status server:
 - `http://<home-ip>:9090/`
-- `http://<home-ip>:9090/health`
-
-It returns:
-- `200` when target is up.
-- `503` when target is down.
 
 ## 5. Recommended production setup at home
 - Run monitor with `systemd`/`pm2` so it auto-restarts.
