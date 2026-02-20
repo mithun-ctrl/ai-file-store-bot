@@ -79,24 +79,14 @@ Note: For private channels, if invite link looks like `https://t.me/c/1234567890
 
 ## Health endpoint
 - Default health URL: `http://<server-ip>:<HEALTH_PORT>/`
-- Returns JSON: `{ "status": "Bot Running" }`
+- Returns JSON: `{ "status": "Bot is Running" }`
 - Only `/` is exposed for health checks.
-
-## Home monitor
-Run a home monitoring server:
-
-```bash
-npm run monitor:home
-```
-
-Setup details: `docs/HOME_MONITOR.md`
 
 ## Production VPS deployment
 Detailed production steps are documented in:
 
 - `docs/VPS_DEPLOYMENT.md`
 - `docs/DOCKER_DEPLOYMENT.md`
-- `docs/HOME_MONITOR.md`
 
 It covers:
 - Ubuntu server setup
@@ -105,4 +95,3 @@ It covers:
 - logs, restart, and upgrade flow
 - security basics
 - Docker + Docker Compose deployment
-- Home monitor server for UP/DOWN checks

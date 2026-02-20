@@ -17,13 +17,11 @@ async function bootstrap() {
   });
 
   await bot.launch();
-  healthServer.setBotLaunched(true);
   console.log("[BOT] Telegraf bot started");
 }
 
 async function shutdown(signal) {
   console.log(`[APP] ${signal} received, shutting down`);
-  healthServer.setShuttingDown(true);
 
   try {
     bot.stop(signal);
@@ -37,7 +35,6 @@ async function shutdown(signal) {
 }
 
 bootstrap().catch((error) => {
-  healthServer.setShuttingDown(true);
   console.error("[APP] Startup failed:", error.message);
   process.exit(1);
 });

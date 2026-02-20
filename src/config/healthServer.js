@@ -1,4 +1,4 @@
-import http from "node:http";
+import express from "express";
 
 function toPositiveInt(value, fallback) {
   const parsed = Number(value);
@@ -12,23 +12,21 @@ function toPositiveInt(value, fallback) {
 export function createHealthServer() {
   const host = process.env.HEALTH_HOST || "0.0.0.0";
   const port = toPositiveInt(process.env.HEALTH_PORT, 8080);
+  const app = express();
+  let server = null;
 
-  const server = http.createServer((req, res) => {
-    const pathname = new URL(req.url || "/", "http://localhost").pathname;
-    if (pathname !== "/") {
-      res.writeHead(404, { "content-type": "application/json; charset=utf-8" });
-      res.end(JSON.stringify({ error: "Not found" }));
-      return;
-    }
+  app.get("/", (req, res) => {
+    res.status(200).json({ status: "Bot is Running" });
+  });
 
-    res.writeHead(200, { "content-type": "application/json; charset=utf-8" });
-    res.end(JSON.stringify({ status: "Bot Running" }));
+  app.use((req, res) => {
+    res.status(404).json({ error: "Not found" });
   });
 
   return {
     start() {
       return new Promise((resolve) => {
-        server.listen(port, host, () => {
+        server = app.listen(port, host, () => {
           console.log(`[HEALTH] Listening on http://${host}:${port}`);
           resolve();
         });
@@ -36,10 +34,13 @@ export function createHealthServer() {
     },
     stop() {
       return new Promise((resolve) => {
+        if (!server) {
+          resolve();
+          return;
+        }
+
         server.close(() => resolve());
       });
-    },
-    setBotLaunched() {},
-    setShuttingDown() {}
+    }
   };
 }

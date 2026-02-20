@@ -54,7 +54,7 @@ curl -i http://127.0.0.1:8080/
 ```
 
 Expected:
-- `200` with JSON `{ "status": "Bot Running" }`.
+- `200` with JSON `{ "status": "Bot is Running" }`.
 
 ## 5. Check logs and status
 
@@ -100,7 +100,6 @@ Recommended:
 - Keep `.env` private.
 - Enable firewall (`ufw`) and open only required ports.
 - Do not expose MongoDB port publicly.
-- Allow health port access only from your home IP if using remote monitoring.
 
 ## 9. Troubleshooting
 
