@@ -32,7 +32,7 @@ Edit `.env` and set:
 - `BOT_TOKEN`
 - `BOT_USERNAME` (without `@`)
 - `DB_CHANNEL_ID`
-- `HEALTH_PORT` (default `8080`)
+- `PORT` (default `8080`)
 
 Default Docker DB URI is already set:
 - `DB_URI=mongodb://mongo:27017/file-link-store-bot`

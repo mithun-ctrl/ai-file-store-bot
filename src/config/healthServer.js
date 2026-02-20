@@ -11,7 +11,7 @@ function toPositiveInt(value, fallback) {
 
 export function createHealthServer() {
   const host = process.env.HEALTH_HOST || "0.0.0.0";
-  const port = toPositiveInt(process.env.HEALTH_PORT, 8080);
+  const port = toPositiveInt(process.env.PORT || process.env.HEALTH_PORT, 8080);
   const app = express();
   let server = null;
 

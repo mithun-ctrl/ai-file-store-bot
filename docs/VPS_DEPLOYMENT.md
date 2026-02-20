@@ -59,7 +59,7 @@ Set:
 - `DB_URI`
 - `DB_CHANNEL_ID` (example: `-1001234567890`)
 - `HEALTH_HOST` (recommended: `0.0.0.0`)
-- `HEALTH_PORT` (recommended: `8080`)
+- `PORT` (recommended: `8080`)
 
 ## 6. Run once for verification
 
