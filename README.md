@@ -62,8 +62,6 @@ npm run dev
 | `BOT_USERNAME` | Yes | Bot username without `@` |
 | `DB_URI` | Yes | MongoDB connection string |
 | `DB_CHANNEL_ID` | Yes | Telegram channel ID to index (example: `-1001234567890`) |
-| `HEALTH_HOST` | No | Health server bind host (default: `0.0.0.0`) |
-| `PORT` | No | Health server port (default: `8080`) |
 
 ## Telegram setup checklist
 1. Create bot with `@BotFather`.
@@ -77,16 +75,10 @@ Note: For private channels, if invite link looks like `https://t.me/c/1234567890
 - `/search <query>`: search stored files and show paginated result buttons (10 per page).
 - `/start <linkId>`: fetch file(s) for a generated deep link.
 
-## Health endpoint
-- Default health URL: `http://<server-ip>:<PORT>/`
-- Returns JSON: `{ "status": "Bot is Running" }`
-- Only `/` is exposed for health checks.
-
 ## Production VPS deployment
 Detailed production steps are documented in:
 
 - `docs/VPS_DEPLOYMENT.md`
-- `docs/DOCKER_DEPLOYMENT.md`
 
 It covers:
 - Ubuntu server setup
@@ -94,4 +86,5 @@ It covers:
 - systemd service setup
 - logs, restart, and upgrade flow
 - security basics
-- Docker + Docker Compose deployment
+
+Docker-based deployment was removed; rely on the process manager guidance above.
