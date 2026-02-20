@@ -62,6 +62,7 @@ npm run dev
 | `BOT_USERNAME` | Yes | Bot username without `@` |
 | `DB_URI` | Yes | MongoDB connection string |
 | `DB_CHANNEL_ID` | Yes | Telegram channel ID to index (example: `-1001234567890`) |
+| `PORT` | No | HTTP port for the express status endpoint (default: `8080`) |
 
 ## Telegram setup checklist
 1. Create bot with `@BotFather`.
@@ -74,6 +75,11 @@ Note: For private channels, if invite link looks like `https://t.me/c/1234567890
 ## Bot commands
 - `/search <query>`: search stored files and show paginated result buttons (10 per page).
 - `/start <linkId>`: fetch file(s) for a generated deep link.
+
+## Health endpoint
+- Default URL: `http://<server-ip>:<PORT>/`
+- Returns JSON: `{ "botSatus": "Bot is Running.." }`
+- Only `/` is exposed.
 
 ## Production VPS deployment
 Detailed production steps are documented in:

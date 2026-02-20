@@ -2,8 +2,12 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import { connectDB } from "./config/database.js";
 import { bot } from "./config/bot.js";
+import { createExpressServer } from "./config/expressServer.js";
+
+const expressServer = createExpressServer();
 
 async function bootstrap() {
+  await expressServer.start();
   await connectDB();
 
   bot.catch((error, ctx) => {
@@ -22,6 +26,7 @@ async function shutdown(signal) {
   try {
     bot.stop(signal);
     await mongoose.connection.close(false);
+    await expressServer.stop();
   } catch (error) {
     console.error("[APP] Shutdown error:", error.message);
   } finally {
