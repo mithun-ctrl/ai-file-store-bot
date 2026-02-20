@@ -26,7 +26,7 @@ export function createExpressServer() {
     start() {
       return new Promise((resolve) => {
         server = app.listen(port, host, () => {
-          console.log(`[EXPRESS] Listening on http://${host}:${port}`);
+          console.log(`Health check server is running on port :${port}`);
           resolve();
         });
       });
