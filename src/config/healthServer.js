@@ -38,6 +38,12 @@ export function createHealthServer() {
     const db = getDbStatus();
     const ready = db.connected && botLaunched && !shuttingDown;
 
+    if (pathname === "/") {
+      res.writeHead(200, { "content-type": "application/json; charset=utf-8" });
+      res.end(JSON.stringify({ status: "Bot Running" }));
+      return;
+    }
+
     const payload = {
       status: ready ? "up" : "down",
       service: "file-link-store-bot",
@@ -54,7 +60,7 @@ export function createHealthServer() {
       return;
     }
 
-    if (pathname === "/" || pathname === "/health/ready" || pathname === "/health") {
+    if (pathname === "/health/ready" || pathname === "/health") {
       res.writeHead(ready ? 200 : 503, { "content-type": "application/json; charset=utf-8" });
       res.end(JSON.stringify(payload));
       return;
