@@ -58,6 +58,8 @@ Set:
 - `BOT_USERNAME` (without `@`)
 - `DB_URI`
 - `DB_CHANNEL_ID` (example: `-1001234567890`)
+- `HEALTH_HOST` (recommended: `0.0.0.0`)
+- `HEALTH_PORT` (recommended: `8080`)
 
 ## 6. Run once for verification
 
@@ -132,7 +134,20 @@ Stop:
 sudo systemctl stop file-link-store-bot
 ```
 
-## 9. Updating bot on VPS
+## 9. Health check endpoint
+Default endpoint:
+
+```bash
+curl -i http://127.0.0.1:8080/
+```
+
+Expected:
+- `200` if bot is ready.
+- `503` if bot is down/not ready.
+
+For home monitoring, expose `HEALTH_PORT` in firewall only for your home public IP.
+
+## 10. Updating bot on VPS
 
 ```bash
 cd /opt/file-link-store-bot
@@ -142,14 +157,14 @@ sudo systemctl restart file-link-store-bot
 sudo journalctl -u file-link-store-bot -n 50 --no-pager
 ```
 
-## 10. Security checklist
+## 11. Security checklist
 - Keep `.env` private and never commit it.
 - Use strong DB credentials.
 - Restrict MongoDB access by IP/network.
 - Keep OS packages updated (`apt update && apt upgrade`).
 - Use firewall rules (`ufw`) and allow only required ports.
 
-## 11. Troubleshooting
+## 12. Troubleshooting
 
 Service fails to start:
 - Check `sudo systemctl status file-link-store-bot`.

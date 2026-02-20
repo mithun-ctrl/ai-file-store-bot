@@ -32,6 +32,7 @@ Edit `.env` and set:
 - `BOT_TOKEN`
 - `BOT_USERNAME` (without `@`)
 - `DB_CHANNEL_ID`
+- `HEALTH_PORT` (default `8080`)
 
 Default Docker DB URI is already set:
 - `DB_URI=mongodb://mongo:27017/file-link-store-bot`
@@ -45,6 +46,16 @@ docker compose up -d --build
 Containers:
 - `file-link-store-mongo`: MongoDB with persistent volume `mongo_data`
 - `file-link-store-bot`: Telegram bot service
+
+Health endpoint (default):
+
+```bash
+curl -i http://127.0.0.1:8080/
+```
+
+Expected:
+- `200` when bot is ready.
+- `503` when bot is down/not ready.
 
 ## 5. Check logs and status
 
@@ -90,6 +101,7 @@ Recommended:
 - Keep `.env` private.
 - Enable firewall (`ufw`) and open only required ports.
 - Do not expose MongoDB port publicly.
+- Allow health port access only from your home IP if using remote monitoring.
 
 ## 9. Troubleshooting
 
